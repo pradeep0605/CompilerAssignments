@@ -1,0 +1,48 @@
+1we can set the lables for x & y axises using
+
+=======================================================
+set xlabel "asdf"
+set ylabel "dfgd"
+=======================================================
+
+
+
+=======================================================================
+plot "filename" with lines/linespoints/ (with other options available)
+=======================================================================
+
+
+
+=======================================================================
+f(x) = x**2    (like this we can define our own function).
+=======================================================================
+
+
+
+
+we can give the title for the functions using title "title name"
+
+=======================================================================
+plot f(x) with linespoints title "Name of the function"
+=======================================================================
+
+
+
+
+
+we can give the color for a line and also the widith to the line
+
+=======================================================================
+plot "finename" with linespoints title "adsf" linecolor "color"      linewidth 0-10
+=======================================================================
+
+
+
+
+
+
+
+
+
+
+

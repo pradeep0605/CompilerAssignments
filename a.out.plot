@@ -1,0 +1,10 @@
+100 20.5 black
+200 103 black
+300 304 black
+400 684.33 black
+500 1324 black
+600 2300 black
+700 3611.66 black
+800 5389.33 black
+900 7940 black
+1000 11069.33 black

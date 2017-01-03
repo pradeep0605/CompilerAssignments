@@ -1,0 +1,1240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="js" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en"><head>
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>An Introduction to GraphViz | Linux Journal</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="canonical" href="http://www.linuxjournal.com/article/7275">
+<meta name="keywords" content="Audio/Video">
+<meta name="description" content="GraphViz is a collection of tools for manipulating graph structures and  generating graph layouts. Graphs can be either directed or undirected. GraphViz offers both graphical and command-line tools. A Perl interface also is available, but it is not covered here for reasons of generality.">
+<link rel="shortcut icon" href="http://www.linuxjournal.com/files/linuxjournal.com/ufiles/linuxjournal_favicon.png" type="image/x-icon">
+  <link type="text/css" rel="stylesheet" media="all" href="7275_files/css_4a8aa5256da99da5eade734b1ec1a7f7.css">
+<link type="text/css" rel="stylesheet" media="print" href="7275_files/css_fdf85486e7f023472a6d6f67fa08f249.css">
+<!--[if IE]>
+<link type="text/css" rel="stylesheet" media="all" href="/sites/linuxjournal.com/themes/zen/zen/ie.css?P" />
+<![endif]-->
+  <script type="text/javascript" async="" src="7275_files/quant.js"></script><script src="7275_files/a.js" async="" type="text/javascript"></script><script type="text/javascript" async="" src="7275_files/8219.js"></script><script type="text/javascript" src="7275_files/js_e36b4225ff3140bea628c6064bc51b97.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings, { "basePath": "/", "user_relationships_ui": { "loadingimage": "/sites/linuxjournal.com/modules/user_relationships/user_relationships_ui/images/loadingAnimation.gif", "savingimage": "/sites/linuxjournal.com/modules/user_relationships/user_relationships_ui/images/savingimage.gif", "position": { "position": "absolute", "left": "0", "top": "0" } }, "quicktabs": { "qt_1": { "tabs": [ 0, 0, 0 ] } } });
+//--><!]]>
+</script>
+<!-- PUT THIS TAG IN THE head SECTION -->
+<script type="text/javascript" src="7275_files/google_service.js">
+</script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-3600556074671070");
+  GS_googleEnableAllServices();
+</script><script src="7275_files/google_ads.js"></script>
+<script type="text/javascript">
+  GA_googleAddSlot("ca-pub-3600556074671070", "Half_Banner336x90");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Large_Rectangle336x280");
+  GA_googleAddSlot("ca-pub-3600556074671070", "Leaderboard728x90");
+GA_googleAddSlot("ca-pub-3600556074671070", "Desktop_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Desktop_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Embedded_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Embedded_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Mobile_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Mobile_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Security_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Security_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "SysAdmin_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "SysAdmin_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "Virtualization_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "Virtualization_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "HPC_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "HPC_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "WebDevelopment_LargeRectangle");
+GA_googleAddSlot("ca-pub-3600556074671070", "WebDevelopment_Leaderboard");
+GA_googleAddSlot("ca-pub-3600556074671070", "large_rectangle_test");
+GA_googleAddSlot("ca-pub-3600556074671070", "article_footer");
+GA_googleAddSlot("ca-pub-3600556074671070", "sidebar_bottom_lr");
+GA_googleAddSlot("ca-pub-3600556074671070", "small_footer_square");
+GA_googleAddSlot("ca-pub-3600556074671070", "small_footer_square_middle");
+GA_googleAddSlot("ca-pub-3600556074671070", "small_footer_square_right");
+GA_googleAddSlot("ca-pub-3600556074671070", "subscriptions");
+
+</script>
+<script type="text/javascript">
+  GA_googleFetchAds();
+</script>
+<!-- END OF TAG FOR head SECTION -->
+
+ <!-- <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script> -->
+ <!--<script type="text/javascript">_uacct = "UA-1117794-1"; urchinTracker();</script> -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="7275_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-1117794-1");
+pageTracker._setDomainName(".linuxjournal.com");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- Start Quantcast tag -->
+<script type="text/javascript" src="7275_files/quant.js"></script>
+<script type="text/javascript">_qacct="p-a3K3N6enFe9wA";quantserve();</script>
+<script src="7275_files/osd.js" type="text/javascript"></script><script src="7275_files/a_002" type="text/javascript"></script><script src="7275_files/search.js" type="text/javascript"></script></head><body class="not-front not-logged-in node-type-xmlnode one-sidebar sidebar-right page-node-7275 section-node"><object>
+<noscript>
+<a href="http://www.quantcast.com/p-a3K3N6enFe9wA"
+target="_blank"><img
+src="http://pixel.quantserve.com/pixel/p-a3K3N6enFe9wA.gif"
+style="display: none;" border="0" height="1" width="1"
+alt="Quantcast"/></a>
+</noscript>
+</object>
+<!-- End Quantcast tag -->
+
+
+
+
+  <div id="page"><div id="page-inner">
+<div id="header-top">
+<div id="login">
+<form action="/?q=user&amp;destination=node%2F7275" method="post" id="user-login">
+Username/Email:&nbsp;<input maxlength="60" name="name" id="edit-name" size="15" class="form-text required" type="text">
+Password:&nbsp;<input maxlength="" name="pass" id="edit-pass" size="15" class="form-text required" type="password">
+<input name="op" value="Login" class="form-submit" type="submit">
+
+
+<input name="form_id" id="edit-user-login" value="user_login" type="hidden">
+
+</form>
+</div>
+<div id="login-links">
+<a href="http://www.linuxjournal.com/user/register">Register</a> | <a href="http://www.linuxjournal.com/user/password">Forgot your password?</a>
+
+
+
+</div>
+<div id="connect">
+<a href="http://www.twitter.com/linuxjournal" title="Follow us on Twitter"><img alt="Twitter" src="7275_files/twittericon.jpg"></a><a href="http://www.facebook.com/linuxjournal" title="Become a Fan on Facebook"><img alt="Facebook" src="7275_files/fbicon.jpg"></a><a href="http://www.flickr.com/groups/linuxjournal/pool/" title="Contribute to Our Flickr Pool"><img alt="Flickr" src="7275_files/flickricon.jpg"></a><a href="http://www.linuxjournal.com/rss_feeds" title="Subscribe to Our Feeds"><img alt="RSS" src="7275_files/rssicon.jpg"></a>
+</div>
+</div> <!-- /#header-top -->
+
+
+
+
+
+    <a name="top" id="navigation-top"></a>
+          <div id="skip-to-nav"><a href="#navigation">Skip to Navigation</a></div>
+    
+    <div id="header"><div id="header-inner" class="clear-block">
+
+              <div id="logo-title">
+
+                      <div id="logo"><a href="http://www.linuxjournal.com/" title="Home" rel="home"><img src="7275_files/logo-lj.jpg" alt="Linux Journal" id="logo-image"></a></div>
+          
+          
+          
+	<div id="leaderboard-adblock" class="adblock leaderboard-adblock">
+       <div id="block-block-90" class="block block-block region-odd even region-count-1 count-14"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><!-- PUT THIS TAG IN DESIRED LOCATION OF SLOT Leaderboard728x90
+     -->
+<script type="text/javascript">
+  GA_googleFillSlot("Leaderboard728x90");
+</script><script src="7275_files/ads_002"></script><div id="google_ads_div_Leaderboard728x90_ad_container">
+<ins style="width: 728px; height: 90px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 728px; height: 90px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_Leaderboard728x90" id="google_ads_iframe_Leaderboard728x90" frameborder="0" height="90" scrolling="no" width="728"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_Leaderboard728x90_ad_container" ,"Leaderboard728x90");</script>
+<!-- END OF TAG FOR SLOT Leaderboard728x90
+     -->
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+	</div>
+
+        </div> <!-- /#logo-title -->
+      
+
+
+      
+    </div></div> <!-- /#header-inner, /#header -->
+
+    <div id="main"><div id="main-inner" class="clear-block with-navbar">
+
+      <div id="content"><div id="content-inner">
+
+        
+        
+                  <div id="content-header">
+            <div class="breadcrumb"><a href="http://www.linuxjournal.com/">Home</a> › </div>                          <h1 class="title">An Introduction to GraphViz</h1>
+                                                          </div> <!-- /#content-header -->
+        
+        <div id="content-area">
+          <div id="node-7275" class="node node-type-xmlnode"><div class="node-inner">
+
+
+
+  
+
+  
+  
+  
+
+
+  
+  
+
+  
+      <div class="meta">
+              <div class="submitted">
+		Sep 10, 2004		&nbsp;By&nbsp;<a href="http://www.linuxjournal.com/user/801328" title="View user profile.">Mihalis Tsoukalos</a>	</div>
+      
+              <div class="terms terms-inline">&nbsp;in<ul class="links inline"><li class="taxonomy_term_28 first last"><a href="http://www.linuxjournal.com/taxonomy/term/28" rel="tag" title="">Audio/Video</a></li>
+</ul></div>
+      
+  	 </div>
+    <!-- how'd this get in here?</div> -->
+  
+  
+    	<div class="abstract">
+	How to use command-line tools and basic GraphViz utilities to produce graphs both simple and complex.	</div>
+    
+
+
+
+  <div class="content">
+
+    <div class="article" lang="en"><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb44ac0"></a></div><p>
+GraphViz is a collection of tools for manipulating graph structures and 
+generating graph layouts. Graphs can be either directed or undirected.
+GraphViz offers both graphical and command-line tools. A Perl interface
+also is available, but it is not covered here for reasons of generality. 
+Graphical tools are not going to be discussed in this article either.
+Instead, this article focuses on using GraphViz from the command line.
+</p><p>
+Some users like to use command-line tools instead of graphical ones, 
+because command-line tools can be used with a scripting 
+language. This means you can create scripts that create dynamic 
+graphs. Some possible uses of dynamic graphs include:
+</p><div class="itemizedlist"><ul type="disc"><li><p>a traceroute representation of packages going to
+many destinations, taking the form of a tree</p></li><li><p>database relations diagrams between
+tables</p></li><li><p>a graphical report for your boss, e-mailed
+automatically from a cron job</p></li><li><p>a Web site map</p></li><li><p>UML diagrams</p></li><li><p>RPM package dependencies on RPM-based
+systems</p></li><li><p>source code structure diagrams</p></li></ul></div><p>
+The package is available compiled for most Linux and UNIX distributions
+(see Resources). It also is available in source code, so you can compile it 
+yourself. Use your favorite method of software installation to get
+GraphViz on your system.
+</p><p>
+GraphViz is comprised of the following programs and libraries.
+</p><div class="itemizedlist"><ul type="disc"><li><p>The dot program: a utility program for drawing directed graphs. It accepts input 
+in the dot language. The dot language can define three kinds of 
+objects: graphs, nodes and edges. dot uses a Sugiyama-style (see
+Resources) hierarchical layout.</p></li><li><p>The NEATO program: a utility program for drawing undirected graphs. This kind of 
+graph commonly is used for telecommunications and computer programming
+tasks. NEATO uses an implementation of the Kamada-Kawai (see Resources) algorithm for 
+symmetric layouts.</p></li><li><p>The twopi program: a utility program for drawing graphs using a circular layout. One node is chosen as the 
+center, and the other nodes are placed around the center in a circular 
+pattern. If a node is connected to the center node, it is placed at 
+distance 1. If a node is connected to a node directly connected 
+to the center node, it is placed at distance 2 and so on.</p></li><li><p>dotty, tcldot and lefty: three graphical
+programs. dotty is a customizable interface for the X Window System
+written in lefty. tcldot is a customizable graphical
+interface written in Tcl 7. lefty is a graphics editor for technical
+pictures.</p></li><li><p>libgraph and libagraph: the drawing libraries.
+Their presence means an application can use 
+GraphViz as a library rather than as a software tool. 
+</p></li></ul></div></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb455c0"></a>Basic Graph Drawing</div><p>
+The way to execute the dot, NEATO and twopi programs must be shown. The 
+programs have similar command-line arguments. The general method of running 
+dot, NEATO or twopi is as follows:
+</p><pre class="programlisting"><span class="emphasis"><em>toolname</em></span> -Tps <span class="emphasis"><em>filename</em></span> -o output.ps
+</pre><p>
+This command executes the tool (<span class="emphasis"><em>toolname</em></span>), states that the output should
+be in PostScript (using <span class="emphasis"><em>filename</em></span> as input) and generate (-o) the output.ps file.
+Other possible command-line arguments are not be discussed here, but you 
+can check the man pages or the GraphViz Web site (see Resources) for more 
+information.
+</p></div><div class="simplesect" lang="en"><div class="titlepage"><a name="N0xa50890.0xb458d8"></a>Some Simple GraphViz Graphs</div><p>
+A graph G(V,E) is a finite, nonempty set of vertices, V, or nodes and a 
+set of edges, E. If the edges E that have the form of (a,b) are ordered pairs of 
+vertices, then we have a directed graph. If the edges E are unordered 
+pairs of vertices, we have an undirected graph (see Resources). 
+</p><p>
+To make a binary tree using dot, we should know the following theory. A 
+directed graph with no cycles is called a directed acyclic graph. A directed 
+acyclic graph is a tree if it satisfies the following properties:
+</p><div class="itemizedlist"><ul type="disc"><li><p>There is one and only one vertex (the root),
+which no edges enter</p></li><li><p>Every vertex, apart from the root vertex, has only one entering
+edge.</p></li><li><p>There is unique path from the root to each of
+the vertices.</p></li></ul></div><p>
+If the sons of each vertex in a tree are ordered, then the tree is 
+called an ordered tree. A binary tree is an ordered tree such that:
+</p><div class="itemizedlist"><ul type="disc"><li><p>Each son of a vertex is distinguished as either a left child or 
+a right child.</p></li><li><p>Each vertex can have at most one left son and 
+one right son.</p></li></ul></div><p>
+The record argument to the shape parameter is the crucial one in 
+this example. Also, the label parameter has some pointers (named f0, f1 
+and f2 - &lt;f0&gt;, &lt;f1&gt; and &lt;f2&gt; in the dot language code) to declare the 
+specific parts of the records we want to connect. We use the | symbol 
+to separate the pointers. Notice that after the definition of each node, 
+we use the nodename: pointer to denote the part of the record to which we want 
+to connect. See Figure 1 for the output and Listing 1 for the dot source code.
+</p><div class="mediaobject"><img src="7275_files/7275f1.jpg"><div class="caption"><p>Figure 1. A Binary Tree</p></div></div><p><span class="bold"><b>Listing 1. Dot Source Code for Figure 1</b></span></p><pre class="programlisting">
+digraph G
+{
+        node [shape = record];
+
+        node0 [ label ="&lt;f0&gt; | &lt;f1&gt; J | &lt;f2&gt; "];
+        node1 [ label ="&lt;f0&gt; | &lt;f1&gt; E | &lt;f2&gt; "];
+        node4 [ label ="&lt;f0&gt; | &lt;f1&gt; C | &lt;f2&gt; "];
+        node6 [ label ="&lt;f0&gt; | &lt;f1&gt; I | &lt;f2&gt; "];
+        node2 [ label ="&lt;f0&gt; | &lt;f1&gt; U | &lt;f2&gt; "];
+        node5 [ label ="&lt;f0&gt; | &lt;f1&gt; N | &lt;f2&gt; "];
+        node9 [ label ="&lt;f0&gt; | &lt;f1&gt; Y | &lt;f2&gt; "];
+        node8 [ label ="&lt;f0&gt; | &lt;f1&gt; W | &lt;f2&gt; "];
+        node10 [ label ="&lt;f0&gt; | &lt;f1&gt; Z | &lt;f2&gt; "];
+        node7 [ label ="&lt;f0&gt; | &lt;f1&gt; A | &lt;f2&gt; "];
+        node3 [ label ="&lt;f0&gt; | &lt;f1&gt; G | &lt;f2&gt; "];
+
+
+        "node0":f0 -&gt; "node1":f1;
+        "node0":f2 -&gt; "node2":f1;
+
+        "node1":f0 -&gt; "node4":f1;
+        "node1":f2 -&gt; "node6":f1;
+        "node4":f0 -&gt; "node7":f1;
+        "node4":f2 -&gt; "node3":f1;
+
+        "node2":f0 -&gt; "node5":f1;
+        "node2":f2 -&gt; "node9":f1;
+
+        "node9":f0 -&gt; "node8":f1;
+        "node9":f2 -&gt; "node10":f1;
+}
+
+</pre><p>
+A hash table is an array that holds pointers to entries indexed by 
+hash value. Such an entry can be a memory address, a 
+database record holding the wanted information, a certain position in a 
+file that is the start of the wanted record and so on. 
+Hash tables are used for searching that is easy finding purposes. For 
+example, they often are used as indexes in DBMS systems and compilers.
+</p><p>
+The <tt>rotate=90</tt> command in the listing below returns 
+a landscape output page. Notice that the {} inside the label parameter 
+tells the dot language to connect the record parts left to right instead 
+of one above another. It is easy to draw a hash table in this way rather
+than using a graphical tool.
+</p><p>
+The <tt>rankdir=LR</tt> command is the crucial one in
+Listing 1. It tells the dot language to place nodes from left to right.
+See Figure 2 for the output and Listing 2 for the dot source code.
+</p><div class="mediaobject"><a href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/072/7275/7275f2.jpg"><img src="7275_files/7275f2.jpg"></a><div class="caption"><p>Figure 2. A Hash Table</p></div></div><p><span class="bold"><b>Listing 2. Dot Source Code for Figure 2</b></span></p><pre class="programlisting">
+digraph G
+{
+        rankdir = LR;
+        node [shape=record, width=.1, height=.1];
+        rotate=90;
+
+        node0 [label = "&lt;p0&gt; | &lt;p1&gt; | &lt;p2&gt; | &lt;p3&gt; \\
+                 | &lt;p4&gt; | | ", height = 3];
+
+        node[ width=2 ];
+        node1 [label = "{&lt;e&gt; r0 | 123 | &lt;p&gt; }" ];
+        node2 [label = "{&lt;e&gt; r10 | 13 | &lt;p&gt; }" ];
+        node3 [label = "{&lt;e&gt; r11 | 23 | &lt;p&gt; }" ];
+        node4 [label = "{&lt;e&gt; r12 | 326 | &lt;p&gt; }" ];
+        node5 [label = "{&lt;e&gt; r13 | 1f3 | &lt;p&gt; }" ];
+        node6 [label = "{&lt;e&gt; r20 | 123 | &lt;p&gt; }" ];
+        node7 [label = "{&lt;e&gt; r40 | b23 | &lt;p&gt; }" ];
+        node8 [label = "{&lt;e&gt; r41 | 12f | &lt;p&gt; }" ];
+        node9 [label = "{&lt;e&gt; r42 | 1d3 | &lt;p&gt; }" ];
+
+        node0:p0 -&gt; node1:e;
+        node0:p1 -&gt; node2:e;
+        node2:p -&gt; node3:e;
+        node3:p -&gt; node4:e;
+        node4:p -&gt; node5:e;
+
+        node0:p2 -&gt; node6:e;
+        node0:p4 -&gt; node7:e;
+        node7:p -&gt; node8:e;
+        node8:p -&gt; node9:e;
+
+}
+
+</pre><p>
+You can use either of the previous examples with twopi. The main reason 
+for using twopi is it allows you to define and change easily the center item 
+of your graph. This can be done using the center command followed by a 
+node name at the beginning of your file. See Figure 3 for the output and
+Listing 3 for the twopi source code.
+</p><div class="mediaobject"><a href="http://www.linuxjournal.com/files/linuxjournal.com/linuxjournal/articles/072/7275/7275f3.jpg"><img src="7275_files/7275f3.jpg"></a><div class="caption"><p>Figure 3. A twopi Graph</p></div></div><p><span class="bold"><b>Listing 3. Source Code for Figure 3</b></span></p><pre class="programlisting">
+digraph G
+{
+        center = v21;
+
+        center -&gt; v11;
+        center -&gt; v12;
+        center -&gt; v13;
+
+        v11 -&gt; v21;
+        v11 -&gt; v22;
+        v11 -&gt; v23;
+
+        v21 -&gt; v22;
+        v22 -&gt; v23;
+        v23 -&gt; v21;
+
+        v21 -&gt; v31;
+        v21 -&gt; v32;
+        v21 -&gt; v33;
+
+        v32 -&gt; v41;
+        v32 -&gt; v42;
+        v33 -&gt; v43;
+}
+
+</pre></div></div><div class="links"><div class="item-list"><ul class="pager"><li class="pager-current first">1</li>
+<li class="pager-item"><a href="http://www.linuxjournal.com/article/7275?page=0,1" title="Go to page 2" class="active">2</a></li>
+<li class="pager-item"><a href="http://www.linuxjournal.com/article/7275?page=0,2" title="Go to page 3" class="active">3</a></li>
+<li class="pager-item"><a href="http://www.linuxjournal.com/article/7275?page=0,3" title="Go to page 4" class="active">4</a></li>
+<li class="pager-next"><a href="http://www.linuxjournal.com/article/7275?page=0,1" title="Go to next page" class="active">next ›</a></li>
+<li class="pager-last last"><a href="http://www.linuxjournal.com/article/7275?page=0,3" title="Go to last page" class="active">last »</a></li>
+</ul></div></div>
+  </div>
+      <div class="user-signature clear-block">
+______________________
+	<p>
+        <!--paging_filter-->	</p>
+      </div>
+   
+
+
+  <ul class="links inline"><li class="flag-anon first"><a href="http://www.linuxjournal.com/u?destination=node%2F7275">Login to save this as favorite</a></li>
+<li class="service-links-delicious"><a href="http://del.icio.us/post?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7275&amp;title=An+Introduction+to+GraphViz" title="Bookmark this post on del.icio.us." id="service-links-delicious-1" class="service-links-delicious" rel="nofollow"><img src="7275_files/delicious.png" alt="del.icio.us" title="" height="16" width="16"></a></li>
+<li class="service-links-digg"><a href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7275&amp;title=An+Introduction+to+GraphViz" title="Digg this post on digg.com" id="service-links-digg-1" class="service-links-digg" rel="nofollow"><img src="7275_files/digg.png" alt="Digg" title="" height="16" width="16"></a></li>
+<li class="service-links-facebook"><a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7275&amp;t=An+Introduction+to+GraphViz" title="Share on Facebook." id="service-links-facebook-1" class="service-links-facebook" rel="nofollow"><img src="7275_files/facebook.png" alt="Facebook" title="" height="16" width="16"></a></li>
+<li class="service-links-reddit"><a href="http://reddit.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7275&amp;title=An+Introduction+to+GraphViz" title="Submit this post on reddit.com." id="service-links-reddit-1" class="service-links-reddit" rel="nofollow"><img src="7275_files/reddit.png" alt="Reddit" title="" height="16" width="16"></a></li>
+<li class="service-links-slashdot"><a href="http://slashdot.org/bookmark.pl?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7275&amp;title=An+Introduction+to+GraphViz" title="Bookmark this post on SlashDot" id="service-links-slashdot-1" class="service-links-slashdot" rel="nofollow"><img src="7275_files/slashdot.png" alt="SlashDot" title="" height="16" width="16"></a></li>
+<li class="service-links-stumbleupon"><a href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.linuxjournal.com%2Farticle%2F7275&amp;title=An+Introduction+to+GraphViz" title="Thumb this up at StumbleUpon" id="service-links-stumbleupon-1" class="service-links-stumbleupon" rel="nofollow"><img src="7275_files/stumbleit.png" alt="StumbleUpon" title="" height="16" width="16"></a></li>
+<li class="tweet_Twitter last"><a href="http://twitter.com/home?status=+An+Introduction+to+GraphViz%3A+http%3A/%2Fwww.linuxjournal.com/article/7275" class="tweet" rel="nofollow" target="_blank"><img src="7275_files/twitter.png" alt="Post to Twitter" title="Post to Twitter" height="16" width="16"></a></li>
+</ul>
+ <!-- <div class="contentad">
+
+  </div>
+  -->
+
+<div id="article_footer"><!-- article_footer -->
+<script type="text/javascript">
+GA_googleFillSlot("article_footer");
+</script><script src="7275_files/ads_003"></script><div id="google_ads_div_article_footer_ad_container">
+<ins style="width: 468px; height: 60px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 468px; height: 60px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_article_footer" id="google_ads_iframe_article_footer" frameborder="0" height="60" scrolling="no" width="468"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_article_footer_ad_container" ,"article_footer");</script>  
+</div> <!-- /#article_footer -->
+
+
+
+
+</div></div> <!-- /node-inner, /node -->
+
+
+  <div id="comments">
+          <h2 id="comments-title">Comments</h2>
+        <form action="/article/7275" accept-charset="UTF-8" method="post" id="comment-controls">
+<div><div class="box"><div class="box-inner">
+
+      <h2 class="title">Comment viewing options</h2>
+  
+  <div class="content">
+    <div class="container-inline"><input name="form_build_id" id="form-d701414c7eddd0accbbe9cb636b5850d" value="form-d701414c7eddd0accbbe9cb636b5850d" type="hidden">
+<input name="form_id" id="edit-comment-controls" value="comment_controls" type="hidden">
+<div class="form-item" id="edit-mode-wrapper">
+ <select name="mode" class="form-select" id="edit-mode"><option value="1">Flat list - collapsed</option><option value="2">Flat list - expanded</option><option value="3">Threaded list - collapsed</option><option value="4" selected="selected">Threaded list - expanded</option></select>
+</div>
+<div class="form-item" id="edit-order-wrapper">
+ <select name="order" class="form-select" id="edit-order"><option value="1" selected="selected">Date - newest first</option><option value="2">Date - oldest first</option></select>
+</div>
+<div class="form-item" id="edit-comments-per-page-wrapper">
+ <select name="comments_per_page" class="form-select" id="edit-comments-per-page"><option value="10">10 comments per page</option><option value="30">30 comments per page</option><option value="50" selected="selected">50 comments per page</option><option value="70">70 comments per page</option><option value="90">90 comments per page</option><option value="150">150 comments per page</option><option value="200">200 comments per page</option><option value="250">250 comments per page</option><option value="300">300 comments per page</option></select>
+</div>
+<input name="op" id="edit-submit" value="Save settings" class="form-submit" type="submit">
+</div><div class="description">Select your preferred way to display the comments and click "Save settings" to activate your changes.</div>  </div>
+
+</div></div> <!-- /box-inner, /box -->
+
+</div></form>
+<a id="comment-11064"></a>
+<div class="comment comment-published odd first comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="http://www.linuxjournal.com/article/7275#comment-11064" class="active">Re: An Introduction to GraphViz</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="7275_files/personicon.jpg" alt="Anonymous's picture" title="Anonymous's picture"></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Sun, 09/12/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Readers might be wondering why dia doesn't include dot, or KDE, or...</p>
+<p>And the answer's the license, which is kind of open source, but not 
+quite.  OSI don't seem to regard it as so, anyway, and it's in nonfree 
+in Debian.</p>
+<p>However, for those many cases where the license doesn't matter so 
+long as you can get the tool, graphviz is a great set of tools to have 
+around.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-11063"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="http://www.linuxjournal.com/article/7275#comment-11063" class="active">Re: An Introduction to GraphViz</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="7275_files/personicon.jpg" alt="Anonymous's picture" title="Anonymous's picture"></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Thu, 09/09/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Any reason you didn't mention Leon Brocard's excellent GraphViz Perl module, which makes this so much easier?</p>
+<p><a href="http://search.cpan.org/%7Elbrocard/GraphViz-2.00/" title="http://search.cpan.org/~lbrocard/GraphViz-2.00/">http://search.cpan.org/~lbrocard/GraphViz-2.00/</a></p>
+<p>To say nothing of the other GraphViz related modules on CPAN.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<a id="comment-11062"></a>
+<div class="comment comment-published odd comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="http://www.linuxjournal.com/article/7275#comment-11062" class="active">Re: An Introduction to GraphViz</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="7275_files/personicon.jpg" alt="Anonymous's picture" title="Anonymous's picture"></div>
+
+  <div class="submitted">
+    Submitted by Anonymous on Thu, 09/09/2004 - 01:00.  </div>
+
+  <div class="content">
+    <p>Great article!<br>
+I wrote a web log analyzer that outputs a graphviz<br>
+graph from the web server logs (<a href="http://www.hping.org/visitors" rel="nofollow">www.hping.org/visitors</a>)<br>
+and I think I can modify the program to produce a better<br>
+output thanks to this article.</p>
+<p>Btw a note about the graphviz's license: it's not opensource<br>
+if I remember correctly (or at least not an OSI approved<br>
+license).</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-13484"></a>
+<div class="comment comment-published even comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="http://www.linuxjournal.com/article/7275#comment-13484" class="active">Graphviz (AT&amp;T source code) license</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="7275_files/personicon.jpg" alt="Stephen North's picture" title="Stephen North's picture"></div>
+
+  <div class="submitted">
+    Submitted by Stephen North (not verified) on Tue, 11/09/2004 - 21:24.  </div>
+
+  <div class="content">
+    <p>Thank you for the nice articles about Graphviz.</p>
+<p>We're aware of the problems about the AT&amp;T Source<br>
+Code License, and expect to have some good news shortly.</p>
+<p>Stephen</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+<div class="indented"><a id="comment-51822"></a>
+<div class="comment comment-published odd last comment-by-anon"><div class="comment-inner clear-block">
+
+      <h3 class="title">
+      <a href="http://www.linuxjournal.com/article/7275#comment-51822" class="active">Graphviz is now under the CPL</a>          </h3>
+  
+  
+  <div class="picture">
+  <img src="7275_files/personicon.jpg" alt="Stephen North's picture" title="Stephen North's picture"></div>
+
+  <div class="submitted">
+    Submitted by Stephen North (not verified) on Fri, 06/03/2005 - 07:27.  </div>
+
+  <div class="content">
+    <p>We hope this will be beneficial to the open source community.<br>
+Please visit <a href="http://www.graphviz.org/" title="www.graphviz.org">www.graphviz.org</a> for downloads and other info.</p>
+      </div>
+
+  
+</div></div> <!-- /comment-inner, /comment -->
+</div></div>  </div>
+        </div> <!-- /#content-area -->
+
+        
+        
+      </div></div> <!-- /#content-inner, /#content -->
+
+              <div id="navbar"><div id="navbar-inner" class="clear-block region region-navbar">
+
+          <a name="navigation" id="navigation"></a>
+
+          
+                      <div id="primary">
+              <ul class="links"><li class="menu-1783 first"><a href="http://www.linuxjournal.com/video">Video</a></li>
+<li class="menu-1800"><a href="http://www.linuxjournal.com/news">News</a></li>
+<li class="menu-150"><a href="http://www.linuxjournal.com/blog">Blogs</a></li>
+<li class="menu-1802"><a href="http://www.linuxjournal.com/tag/reviews" title="">Reviews</a></li>
+<li class="menu-187"><a href="http://www.linuxjournal.com/tag/how-tos">HOWTOs</a></li>
+<li class="menu-1803"><a href="http://www.linuxjournal.com/participate" title="">Participate</a></li>
+<li class="menu-71"><a href="http://www.linuxjournal.com/tag/tech-tips" title="">Hep &amp; Tips</a></li>
+<li class="menu-181"><a href="http://www.linuxjournal.com/getlinux">How to Get Linux</a></li>
+<li class="menu-184 last"><a href="http://www.linuxjournal.com/gettinghelp">Getting Help</a></li>
+</ul> <div id="searchbox">
+ 
+<div id="cse-search-form" style="width: 100%;"><div dir="ltr" class="gsc-control-searchbox-only gsc-control-searchbox-only-en"><form accept-charset="utf-8" class="gsc-search-box"><table class="gsc-search-box" cellpadding="0" cellspacing="0"><tbody><tr><td class="gsc-input"><input style="background: url(&quot;http://www.google.com/cse/intl/en/images/google_custom_search_watermark.gif&quot;) no-repeat scroll left center rgb(255, 255, 255);" title="search" name="search" class=" gsc-input" size="10" autocomplete="off" type="text"></td><td class="gsc-search-button"><input title="search" class="gsc-search-button" value="Search" type="submit"></td><td class="gsc-clear-button"><div title="clear results" class="gsc-clear-button">&nbsp;</div></td></tr></tbody></table><table class="gsc-branding" cellpadding="0" cellspacing="0"><tbody><tr><td class="gsc-branding-user-defined"></td><td class="gsc-branding-text"><div class="gsc-branding-text">powered by</div></td><td class="gsc-branding-img"><img class="gsc-branding-img" src="7275_files/small-logo.png"></td></tr></tbody></table></form></div></div>
+<script src="7275_files/jsapi" type="text/javascript"></script>
+<script type="text/javascript"> 
+  google.load('search', '1', {language : 'en'});
+  google.setOnLoadCallback(function() {
+    var customSearchControl = new google.search.CustomSearchControl(
+      '000332554451520836487:ikifqzncxvw');
+
+    customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+    var options = new google.search.DrawOptions();
+    options.enableSearchboxOnly("http://linuxjournal.com/googlesearch","s");
+    customSearchControl.draw('cse-search-form', options);
+  }, true);
+</script><script src="7275_files/a" type="text/javascript"></script><link href="7275_files/defaulten.css" type="text/css" rel="stylesheet"><script src="7275_files/defaulten.js" type="text/javascript"></script>
+<link rel="stylesheet" href="7275_files/default.css" type="text/css">
+<style type="text/css">
+  input.gsc-input {
+    border-color: #EEEEEE;
+  }
+  input.gsc-search-button {
+    border-color: #666666;
+    background-color: #CECECE;
+  }
+</style>
+</div><!-- /#searchbox -->
+            </div> <!-- /#primary -->
+          
+          
+          
+        </div></div> <!-- /#navbar-inner, /#navbar -->
+      
+      
+              <div id="sidebar-right"><div id="sidebar-right-inner" class="region region-right">
+          <div id="block-block-44" class="block block-block region-odd even region-count-1 count-4"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><!-- PUT THIS TAG IN DESIRED LOCATION OF SLOT Large_Rectangle336x280
+     -->
+<script type="text/javascript">
+  GA_googleFillSlot("Large_Rectangle336x280");
+</script><script src="7275_files/ads_007"></script><div id="google_ads_div_Large_Rectangle336x280_ad_container">
+<ins style="width: 336px; height: 280px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 336px; height: 280px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_Large_Rectangle336x280" id="google_ads_iframe_Large_Rectangle336x280" frameborder="0" height="280" scrolling="no" width="336"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_Large_Rectangle336x280_ad_container" ,"Large_Rectangle336x280");</script>
+<!-- END OF TAG FOR SLOT Large_Rectangle336x280
+     -->  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-97" class="block block-block region-even odd region-count-2 count-5"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><!-- subscriptions -->
+<script type="text/javascript">
+GA_googleFillSlot("subscriptions");
+</script><script src="7275_files/ads_005"></script><div id="google_ads_div_subscriptions_ad_container">
+<ins style="width: 336px; height: 280px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 336px; height: 280px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_subscriptions" id="google_ads_iframe_subscriptions" frameborder="0" height="280" scrolling="no" width="336"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_subscriptions_ad_container" ,"subscriptions");</script>
+<br>
+<a class="red" href="http://www.linuxjournal.com/subs/customer_service">Already a subscriber? Click here for subscriber services.</a>
+
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-channels" class="block block-menu region-odd even region-count-3 count-6"><div class="block-inner">
+
+      <h2 class="title">Trending Topics</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://www.linuxjournal.com/tag/cloud" title="">Cloud</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/tag/desktop" title="">Desktop</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/tag/embedded" title="">Embedded</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/tag/hpc" title="">HPC</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/tag/security" title="">Security</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/tag/sysadmin" title="">SysAdmin</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/tag/virtualization" title="">Virtualization</a></li>
+<li class="leaf last"><a href="http://www.linuxjournal.com/tag/web-development" title="">Web Development</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-101" class="block block-block region-even odd region-count-4 count-7"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div><div id="block-menu-menu-channels" class="block block-menu region-odd even region-count-3 count-6"><div class="block-inner"><h2 class="title">Related Jobs</h2><div class="content"><a href="http://jobs.linuxjournal.com/job/senior-technical-specialist-linux-unix-zlinux-melbourne-melbourne-candle-melbourne-18c77635fd/?d=1&amp;source=jobroll" style="text-decoration: none;"><b>Senior Technical Specialist - Linux/U...</b></a><br>Candle (Melbourne)<br>Melbourne, Melbourne, Austr...<br><br><a href="http://jobs.linuxjournal.com/job/technical-support-officer-windows-linux-north-ryde-new-south-hitech-personnel-a-division-of-hitech-dcee8a60d6/?d=1&amp;source=jobroll" style="text-decoration: none;"><b>Technical Support Officer - Windows, ...</b></a><br>HiTech Personnel A division of HiTech...<br>North Ryde, New South Wales...<br><br><a href="http://jobs.linuxjournal.com/job/linux-systems-engineer-melbourne-melbourne-milestone-technology-6aa7b489c9/?d=1&amp;source=jobroll" style="text-decoration: none;"><b>Linux Systems Engineer</b></a><br>Milestone Technology<br>Melbourne, Melbourne, Austr...<br><br><a href="http://jobs.linuxjournal.com/job/highly-skilled-troubleshooters-linux-kernel-engineer-lund-sk-ne-l-n-sweden-consol-partners-1f03dcf58d/?d=1&amp;source=jobroll" style="text-decoration: none;"><b>Highly skilled Troubleshooters - Linu...</b></a><br>Consol Partners<br>Lund, Skåne län, Sweden<br><br><a href="http://jobs.linuxjournal.com/job/linux-integration-engineer-chicago-il-request-technology-llc-60027fd044/?d=1&amp;source=jobroll" style="text-decoration: none;"><b>LINUX INTEGRATION ENGINEER</b></a><br>Request Technology, LLC<br>Chicago, IL<br><br><a href="http://jobs.linuxjournal.com/" style="text-decoration: none;"><b>More Jobs &gt;</b></a><br><a href="http://jobs.linuxjournal.com/post" style="text-decoration: none;"><b>Post a Job &gt;</b></a><br><br><span style="font-size: 11px;">Subscribe to Jobs:<a href="http://jobs.linuxjournal.com/jt/jobs/addedit_alert.php"><img src="7275_files/995027_mail-icon.png" style="margin-right: 7px; margin-left: 5px; vertical-align: middle; border: 0px none;"></a><a href="http://jobs.linuxjournal.com/jt/syndication/feeds.php"><img src="7275_files/995027_rss-icon.png" style="margin-right: 7px; vertical-align: middle; border: 0px none;"></a><a href="http://twitter.com/LinuxJournalJob"><img src="7275_files/995027_twitter-icon.png" style="vertical-align: middle; border: 0px none; background: none repeat scroll 0% 0% rgb(255, 255, 255);"></a><br><br>Powered by <img src="7275_files/logo_small.gif" style="vertical-align: middle; border: 0px none;"></span><br><br><br><br></div></div></div></div><script type="text/javascript" id="jobthread_8959538">
+	(function(){
+		function jobthread_load(){
+			var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
+			s.src = 'http://edge.jobthread.com/jobs.linuxjournal.com/feeds/jobroll/?num_jobs=5&num_featured_jobs=1&display_method=default&template_name=module&target_id=jobthread_8959538&version=2.0';
+			var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+		}
+
+		if (window.addEventListener) {
+			window.addEventListener('load', jobthread_load, false);
+		} else if (window.attachEvent) {
+			window.attachEvent('onload', jobthread_load);
+		}
+	})();
+</script>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-quicktabs-1" class="block block-quicktabs region-odd even region-count-5 count-8"><div class="block-inner">
+
+  
+  <div class="content">
+    <div id="quicktabs-1" class="quicktabs_wrapper quicktabs-style-zen quicktabs-processed"><ul class="quicktabs_tabs quicktabs-style-zen"><li class="qtab-0 active first"><a href="http://www.linuxjournal.com/article/7275?quicktabs_1=0#quicktabs-1" id="quicktabs-tab-1-0" class="qt_tab active">The Latest</a></li><li class="qtab-1"><a href="http://www.linuxjournal.com/article/7275?quicktabs_1=1#quicktabs-1" id="quicktabs-tab-1-1" class="qt_tab active">Popular</a></li><li class="qtab-2 last"><a href="http://www.linuxjournal.com/article/7275?quicktabs_1=2#quicktabs-1" id="quicktabs-tab-1-2" class="qt_tab active">Recent Comments</a></li></ul><div id="quicktabs_container_1" class="quicktabs_main quicktabs-style-zen"><div id="quicktabs_tabpage_1_0" class="quicktabs_tabpage"><div id="block-views-latest_stories-block_1" class="block block-views region-odd odd region-count-1 count-1"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-latest-stories view-id-latest_stories view-display-id-block_1 view-dom-id-1">
+    
+  
+  
+      <div class="view-content">
+      <table class="views-table cols-6">
+    <thead>
+    <tr>
+              <th class="views-field views-field-title">
+                  </th>
+              <th class="views-field views-field-created">
+                  </th>
+          </tr>
+  </thead>
+  <tbody>
+          <tr class="odd views-row-first">
+                  <td class="views-field views-field-title">
+            <a href="http://www.linuxjournal.com/content/using-plop-boot-manager-usb-boot">Using Plop Boot Manager for USB Boot</a>          </td>
+                  <td class="views-field views-field-created">
+            Jan 25, 2012          </td>
+              </tr>
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="http://www.linuxjournal.com/content/moose">Moose</a>          </td>
+                  <td class="views-field views-field-created">
+            Jan 23, 2012          </td>
+              </tr>
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="http://www.linuxjournal.com/content/basic-chemistry-gnome-desktop">Basic Chemistry on the GNOME Desktop</a>          </td>
+                  <td class="views-field views-field-created">
+            Jan 20, 2012          </td>
+              </tr>
+          <tr class="even">
+                  <td class="views-field views-field-title">
+            <a href="http://www.linuxjournal.com/content/black-wednesday">Black Wednesday</a>          </td>
+                  <td class="views-field views-field-created">
+            Jan 18, 2012          </td>
+              </tr>
+          <tr class="odd">
+                  <td class="views-field views-field-title">
+            <a href="http://www.linuxjournal.com/content/can-we-help-att-solve-its-mobile-data-problem">Can we help AT&amp;T solve its mobile data problem?</a>          </td>
+                  <td class="views-field views-field-created">
+            Jan 17, 2012          </td>
+              </tr>
+          <tr class="even views-row-last">
+                  <td class="views-field views-field-title">
+            <a href="http://www.linuxjournal.com/content/zevenos-does-it-recapture-flavor-beos">ZevenOS -  Does it recapture the flavor of BeOS?</a>          </td>
+                  <td class="views-field views-field-created">
+            Jan 17, 2012          </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="http://www.linuxjournal.com/latest">
+    more  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div><div id="quicktabs_tabpage_1_1" class="quicktabs_tabpage quicktabs-hide"><div id="block-views-popular-block_1" class="block block-views region-even even region-count-2 count-2"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-popular view-id-popular view-display-id-block_1 view-dom-id-2">
+    
+  
+  
+      <div class="view-content">
+      <div class="item-list">
+    <ul>
+          <li class="views-row views-row-1 views-row-odd views-row-first">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/article/2082">Linux--The Internet Appliance?</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-2 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/slideshow/readers-choice-2011">Readers' Choice Awards 2011</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-3 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/article/9585">Validate an E-Mail Address with PHP, the Right Way</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-4 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/content/moose">Moose</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-5 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/content/can-we-help-att-solve-its-mobile-data-problem">Can we help AT&amp;T solve its mobile data problem?</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-6 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/article/9065">Linux Timeline</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-7 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/content/linux-product-insider-march-6-2008">Linux Product Insider</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-8 views-row-even">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/content/using-plop-boot-manager-usb-boot">Using Plop Boot Manager for USB Boot</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-9 views-row-odd">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/article/3946">Python Programming for Beginners</a></span>
+  </span>
+</li>
+          <li class="views-row views-row-10 views-row-even views-row-last">  
+  <span class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/article/3882">Why Python?</a></span>
+  </span>
+</li>
+      </ul>
+</div>    </div>
+  
+  
+  
+      
+<div class="more-link">
+  <a href="http://www.linuxjournal.com/popular/today">
+    more  </a>
+</div>
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div><div id="quicktabs_tabpage_1_2" class="quicktabs_tabpage quicktabs-hide"><div id="block-comment-0" class="block block-comment region-odd odd region-count-3 count-3"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="item-list"><ul><li class="first"><a href="http://www.linuxjournal.com/content/non-linux-foss-telephone#comment-371210">Agreed</a><br>11 hours 47 sec ago</li>
+<li><a href="http://www.linuxjournal.com/content/using-plop-boot-manager-usb-boot#comment-371209">I use this with VMWare to test live distros on USB</a><br>12 hours 7 min ago</li>
+<li><a href="http://www.linuxjournal.com/content/zevenos-does-it-recapture-flavor-beos#comment-371208">&gt; and nothing to date comes even close</a><br>14 hours 7 min ago</li>
+<li><a href="http://www.linuxjournal.com/slideshow/readers-choice-2011#comment-371207">A very interesting take on</a><br>14 hours 39 min ago</li>
+<li><a href="http://www.linuxjournal.com/content/jedit-text-editor-and-more#comment-371206">I think that this</a><br>18 hours 53 min ago</li>
+<li><a href="http://www.linuxjournal.com/content/short-notices-news-linux-audio#comment-371205">Author's reply</a><br>19 hours 13 min ago</li>
+<li><a href="http://www.linuxjournal.com/content/using-plop-boot-manager-usb-boot#comment-371204">(Sorry if this message</a><br>1 day 2 hours ago</li>
+<li><a href="http://www.linuxjournal.com/content/how-do-you-manage-your-files-do-you#comment-371203">Folders ?</a><br>1 day 4 hours ago</li>
+<li><a href="http://www.linuxjournal.com/content/using-plop-boot-manager-usb-boot#comment-371202">Broken link in article</a><br>1 day 6 hours ago</li>
+<li class="last"><a href="http://www.linuxjournal.com/content/using-plop-boot-manager-usb-boot#comment-371201">USB boot from GRUB</a><br>1 day 8 hours ago</li>
+</ul></div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+</div></div></div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-67" class="block block-block region-even odd region-count-6 count-9"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><p><a href="http://www.linuxjournal.com/enewsletters"><img alt=" Linux Newsletter" src="7275_files/NewsletterBanner_T3b.jpg"></a></p>
+<p><a href="http://www.linuxjournal.com/new-issue"><img alt=" Linux Newsletter" src="7275_files/SubscriberButton-Jan2012.png"></a></p>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-linux_minute-block_2" class="block block-views region-odd even region-count-7 count-10"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-linux-minute view-id-linux_minute view-display-id-block_2 view-dom-id-3">
+    
+  
+  
+      <div class="view-content">
+        <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+      
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><div class="emvideo emvideo-preview emvideo-youtube"><div class="emfield-emvideo emfield-emvideo-youtube">        <div id="emvideo-youtube-flash-wrapper-1"><object type="application/x-shockwave-flash" data="7275_files/POurJxYaJUsrel0enablejsapi1playerapiidytplayerfs1.swf" id="emvideo-youtube-flash-1" height="250" width="300">
+          <param name="movie" value="http://www.youtube.com/v/POurJxYaJUs&amp;rel=0&amp;enablejsapi=1&amp;playerapiid=ytplayer&amp;fs=1">
+          <param name="allowScriptAccess" value="sameDomain">
+          <param name="quality" value="best">
+          <param name="allowFullScreen" value="true">
+          <param name="bgcolor" value="#FFFFFF">
+          <param name="scale" value="noScale">
+          <param name="salign" value="TL">
+          <param name="FlashVars" value="playerMode=embedded">
+          <param name="wmode" value="transparent">
+        </object></div></div></div></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/video-ssd-editor-note">Return to Solid State</a></span>
+  </div>
+  </div>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-views-linux_minute-block_3" class="block block-views region-even odd region-count-8 count-11"><div class="block-inner">
+
+  
+  <div class="content">
+    <div class="view view-linux-minute view-id-linux_minute view-display-id-block_3 view-dom-id-4">
+    
+  
+  
+      <div class="view-content">
+      <table class="views-view-grid">
+  <tbody>
+                <tr class="row-1 row-first row-last">
+                  <td class="col-1">
+              
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><a href="http://www.linuxjournal.com/video/get-firefox-menu-button-linux"><img src="7275_files/0_002.jpg" alt="See video" title="See video" height="225" width="300"></a></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/video/get-firefox-menu-button-linux">Get Firefox Menu Button in Linux</a></span>
+  </div>
+          </td>
+                  <td class="col-2">
+              
+  <div class="views-field-field-embed-video-embed">
+                <span class="field-content"><a href="http://www.linuxjournal.com/video/quick-and-dirty-ssh-tunneling"><img src="7275_files/0.jpg" alt="See video" title="See video" height="225" width="300"></a></span>
+  </div>
+  
+  <div class="views-field-title">
+                <span class="field-content"><a href="http://www.linuxjournal.com/video/quick-and-dirty-ssh-tunneling">Quick and Dirty SSH Tunneling</a></span>
+  </div>
+          </td>
+                  <td class="col-3">
+                      </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+  
+      <div class="view-footer">
+      <!--paging_filter--><div id="more-vids"><a href="http://www.linuxjournal.com/video">Click here for more videos</a></div>
+    </div>
+  
+  
+</div>   </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-98" class="block block-block region-odd even region-count-9 count-12"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><!-- sidebar_bottom_lr -->
+<script type="text/javascript">
+GA_googleFillSlot("sidebar_bottom_lr");
+</script><script src="7275_files/ads_008"></script><div id="google_ads_div_sidebar_bottom_lr_ad_container">
+<ins style="width: 336px; height: 280px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 336px; height: 280px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_sidebar_bottom_lr" id="google_ads_iframe_sidebar_bottom_lr" frameborder="0" height="280" scrolling="no" width="336"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_sidebar_bottom_lr_ad_container" ,"sidebar_bottom_lr");</script>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-poll-0" class="block block-poll region-even odd region-count-10 count-13"><div class="block-inner">
+
+      <h2 class="title">Poll</h2>
+  
+  <div class="content">
+    <form action="/article/7275" accept-charset="UTF-8" method="post" id="poll-view-voting">
+<div><div class="poll">
+  <div class="vote-form">
+    <div class="choices">
+              <div class="title">How do you manage your files? Do you: :</div>
+            <div class="form-radios"><div class="form-item" id="edit-choice-0-wrapper">
+ <label class="option" for="edit-choice-0"><input id="edit-choice-0" name="choice" value="0" class="form-radio" type="radio"> Organize your files into folders, and find them based on your filing structure</label>
+</div>
+<div class="form-item" id="edit-choice-1-wrapper">
+ <label class="option" for="edit-choice-1"><input id="edit-choice-1" name="choice" value="1" class="form-radio" type="radio"> Lump all your files together and rely on search to find a specific file</label>
+</div>
+<div class="form-item" id="edit-choice-2-wrapper">
+ <label class="option" for="edit-choice-2"><input id="edit-choice-2" name="choice" value="2" class="form-radio" type="radio"> Organize your files into folders, but find them using a search</label>
+</div>
+</div>    </div>
+    <input name="op" id="edit-vote" value="Vote" class="form-submit" type="submit">
+  </div>
+    <input name="form_build_id" id="form-8c93b2fada2ad471784890e4a2d89fe0" value="form-8c93b2fada2ad471784890e4a2d89fe0" type="hidden">
+<input name="form_id" id="edit-poll-view-voting" value="poll_view_voting" type="hidden">
+</div>
+
+</div></form>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+        </div></div> <!-- /#sidebar-right-inner, /#sidebar-right -->
+      
+    </div></div> <!-- /#main-inner, /#main -->
+
+          <div id="footer"><div id="footer-inner" class="region region-footer">
+
+        
+        <div id="block-block-62" class="block block-block region-odd odd region-count-1 count-15"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="subsform">  
+     
+        
+	<form method="post" name="form" action="https://www.pubservice.com/subnew2page.aspx?PC=LJ&amp;PK&amp;FC=" class="subform">
+        
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody><tr>
+            <td valign="top">First Name</td>
+
+            <td colspan="2" valign="top">Last Name</td>
+          </tr>
+
+    
+          <tr>
+            <td valign="top"><input name="FN" size="18" maxlength="" class="form1" type="text"></td>
+
+            <td colspan="2" valign="top"><input name="LN" size="18" class="form1" type="text"></td>
+          </tr>
+          <tr>
+            <td valign="top">Address 1</td>
+
+            <td colspan="2" valign="top">Address 2</td>
+
+
+          </tr>
+          <tr>
+            <td valign="top"><input name="A1" size="18" maxlength="" class="form1" type="text"></td>
+
+            <td colspan="2" valign="top"><input name="A2" size="18" class="form1" type="text"></td>
+
+  
+          </tr>
+          <tr>
+            <td valign="top">City</td>
+
+            <td valign="top">State</td>
+
+            <td valign="top">Zip</td>
+          </tr>
+
+    
+          <tr>
+            <td valign="top"><input name="CT" size="18" maxlength="" class="form1" type="text"></td>
+
+            <td valign="top"><input name="ST" size="2" class="form2" type="text"></td>
+
+            <td valign="top"><input name="ZP" size="5" maxlength="5" class="form3" type="text"></td>
+          </tr>
+       <tr>
+            <td colspan="3" valign="top">Email</td>
+       </tr>
+       <tr>
+<td colspan="3" valign="top"><input name="EM" size="40" class="form4" type="text"></td>
+        </tr>
+        </tbody></table>
+        
+        <div align="center">
+         <input src="7275_files/clickhere.jpg" type="image">
+        </div>
+
+      </form>
+       <div class="subslinks">
+          <a href="https://www.pubservice.com/subnew2page.aspx?PC=LJ&amp;PK=MPUB911&amp;FC=CANADA&amp;SA=P">Canadian Residents</a> | <a href="https://www.pubservice.com/Subnew1.aspx?PC=LJ&amp;PK=MPUB911&amp;FC=UNITED%20STATES&amp;ref=1&amp;SA=P">Foreign Residents</a> | <a href="https://www.pubservice.com/subgift.aspx?PC=LJ">Gift Subscriptions</a> | <a href="http://www.linuxjournal.com/subs/customer_service">Customer Service</a> | <a href="http://www.linuxjournal.com/content/privacystatement">Privacy Policy</a>
+
+          </div>
+ 		</div> 
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-63" class="block block-block region-even even region-count-2 count-16"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="footer-left">
+<!-- small_footer_square -->
+<script type="text/javascript">
+GA_googleFillSlot("small_footer_square");
+</script><script src="7275_files/ads_006"></script><div id="google_ads_div_small_footer_square_ad_container">
+<ins style="width: 200px; height: 200px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 200px; height: 200px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_small_footer_square" id="google_ads_iframe_small_footer_square" frameborder="0" height="200" scrolling="no" width="200"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_small_footer_square_ad_container" ,"small_footer_square");</script>
+ </div>
+<div id="footer-middle">
+<!-- small_footer_square_middle -->
+<script type="text/javascript">
+GA_googleFillSlot("small_footer_square_middle");
+</script><script src="7275_files/ads"></script><div id="google_ads_div_small_footer_square_middle_ad_container">
+<ins style="width: 200px; height: 200px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 200px; height: 200px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_small_footer_square_middle" id="google_ads_iframe_small_footer_square_middle" frameborder="0" height="200" scrolling="no" width="200"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_small_footer_square_middle_ad_container" ,"small_footer_square_middle");</script>
+ </div>
+<div id="footer-right">
+<!-- small_footer_square_right -->
+<script type="text/javascript">
+GA_googleFillSlot("small_footer_square_right");
+</script><script src="7275_files/ads_004"></script><div id="google_ads_div_small_footer_square_right_ad_container">
+<ins style="width: 200px; height: 200px; display: inline-table; position: relative; border: 0pt none;"><ins style="width: 200px; height: 200px; display: block; position: relative; border: 0pt none;"><iframe style="border: 0pt none; position: absolute; top: 0pt; left: 0pt;" marginheight="0" marginwidth="0" name="google_ads_iframe_small_footer_square_right" id="google_ads_iframe_small_footer_square_right" frameborder="0" height="200" scrolling="no" width="200"></iframe></ins></ins></div>
+<script>GA_googleCreateDomIframe("google_ads_div_small_footer_square_right_ad_container" ,"small_footer_square_right");</script>
+</div>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-subscriptions" class="block block-menu region-odd odd region-count-3 count-17"><div class="block-inner">
+
+      <h2 class="title">Digital Edition</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="https://www.pubservice.com/subnew1.aspx?PC=LJ" title="Subscribe to Linux Journal">Subscribe/Renew</a></li>
+<li class="leaf"><a href="https://www.pubservice.com/subinfo.aspx?PC=LJ&amp;DO=P" title="Pay Your Subscription Bill">Pay My Bill</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/subs/customer_service" title="">Customer Service</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/digital" title="">Digital Downloads</a></li>
+<li class="leaf last"><a href="https://www.pubservice.com/subgift.aspx?PC=LJ" title="Give a Subscription to Linux Journal">Gift Subscriptions</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-linux-resources" class="block block-menu region-even even region-count-4 count-18"><div class="block-inner">
+
+      <h2 class="title">Magazine Formats</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://www.linuxjournal.com/content/pdf" title="PC/Mac">PC/Mac</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/content/android" title="Android App">Android</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/content/ios" title="iPhone/iPad">iPhone/iPad</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/content/epub" title="EPUB Format">EPUB</a></li>
+<li class="leaf last"><a href="http://www.linuxjournal.com/content/kindle" title="Kindle Format">Kindle</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-store" class="block block-menu region-odd odd region-count-5 count-19"><div class="block-inner">
+
+      <h2 class="title">The Store</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://lj.mybigcommerce.com/categories/Buttons-%26-Stickers/" title="Buttons &amp; Stickers">Stickers</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/T%252dShirts-%26-Apparel/" title="T-shirts and Apparel">T-shirts</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/Posters/" title="Posters">Posters</a></li>
+<li class="leaf"><a href="http://lj.mybigcommerce.com/categories/Back-Issues-%252d-Digital-Downloads/" title="Buy Back Issues of Linux Journal">Back Issues</a></li>
+<li class="leaf last"><a href="http://linuxjournal.com/archive_cd" title="Archive CD">Archive CD</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-about" class="block block-menu region-even even region-count-6 count-20"><div class="block-inner">
+
+      <h2 class="title">About Us</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://www.linuxjournal.com/advertising" title="Advertise in Linux Journal">Advertise</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/author" title="Write for Us">Author Info</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/contact" title="Write a Letter to the Editor">Write a Letter</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/aboutus/FAQ" title="Frequently Asked Questions">FAQ</a></li>
+<li class="leaf last"><a href="http://www.linuxjournal.com/staff" title="Masthead">Masthead</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-menu-menu-the-site" class="block block-menu region-odd odd region-count-7 count-21"><div class="block-inner">
+
+      <h2 class="title">The Site</h2>
+  
+  <div class="content">
+    <ul class="menu"><li class="leaf first"><a href="http://www.linuxjournal.com/content/copyright" title="Copyright">Copyright</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/rss_feeds" title="RSS Feeds">RSS Feeds</a></li>
+<li class="leaf"><a href="http://www.linuxjournal.com/content/privacy-statement" title="Privacy Statement">Privacy Policy</a></li>
+<li class="leaf"><a href="mailto:webmaster@linuxjournal.com" title="Report Problems">Report Problems</a></li>
+<li class="leaf last"><a href="http://www.linuxjournal.com/aboutus" title="Contact Us">Contact Us</a></li>
+</ul>  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+<div id="block-block-70" class="block block-block region-even even region-count-8 count-22"><div class="block-inner">
+
+  
+  <div class="content">
+    <!--paging_filter--><div id="copyright">Copyright © 1994 - 2011 <em>Linux Journal</em>. All rights reserved.</div>
+  </div>
+
+  
+</div></div> <!-- /block-inner, /block -->
+
+      </div></div> <!-- /#footer-inner, /#footer -->
+    
+  </div></div> <!-- /#page-inner, /#page -->
+
+  
+  <div id="user_relationships_popup_form" class="user_relationships_ui_popup_form"></div><script type="text/javascript" src="7275_files/js_5ab9125af82e08229d3b8a2d090f996a.js"></script>
+<script type="text/javascript" src="7275_files/8219_002.js"> </script>
+<script type="text/javascript">
+setTimeout(function(){var a=document.createElement("script");
+var b=document.getElementsByTagName('script')[0];
+a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0010/8219.js?"+Math.floor(new Date().getTime()/3600000);
+a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+</script>
+
+
+</body></html>

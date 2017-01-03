@@ -1,0 +1,8 @@
+digraph "dg" {
+	a [ style=bold color="blue" label="WORKING!!!" width=2 height=2]
+	a->b;
+	b->c;
+	b->d;
+	d->e;
+	d->f;
+}
